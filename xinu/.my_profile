@@ -1,6 +1,0 @@
-alias l=ls
-alias c=more
-alias p=pushd
-alias d=dirs
-alias po=popd
-PS1=' $ '
