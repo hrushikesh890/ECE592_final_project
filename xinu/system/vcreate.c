@@ -48,7 +48,7 @@ pid32	vcreate(
 	prptr->prdesc[2] = CONSOLE;
 
 	/* Initialize stack as if the process was called		*/
-	prptr->ptype = SYSTEM;
+	prptr->ptype = USER;
 	prptr->pdbr = allocate_pdpt();
 	
 	*saddr = STACKMAGIC;

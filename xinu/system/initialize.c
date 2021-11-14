@@ -208,6 +208,7 @@ static	void	sysinit()
 	}
 	
 	kprintf("TYOOOOOOOOOOOOOHOOOOO\n");
+	ptmeminit();
 	initialize_page_tables();
 	kprintf("TYOOOOOOOOOOOOOHOOOOO 2\n");
 	char *pd_start = XINU_PAGES*4096;
