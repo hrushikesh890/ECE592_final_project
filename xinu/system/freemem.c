@@ -220,5 +220,5 @@ void free_virtual_mem(uint32 pdbr)
 			freeptmem((char *)&pt[0], 4096);
 		}	
 	}
-	free((char *)&pd[0], 4096);
+	freeptmem((char *)&pd[0], 4096);
 }
