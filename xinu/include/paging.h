@@ -10,7 +10,7 @@
 #define MAX_PT_SIZE     1024    /* size of space used for page tables (in frames)        */
 #define TOTAL_PAGES	58386
 
-#define PT_START	8192*4096
+#define PT_START	(8192*4096)
 
 #define	FFS_START	((8192*4096) + (1024*4096))
 

@@ -1,1 +1,1 @@
-extern	int	yyleng;
+extern	size_t	yyleng;
