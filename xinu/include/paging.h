@@ -48,7 +48,7 @@ typedef struct {
   unsigned int pt_global: 1;		/* should be zero in 586	*/
   unsigned int pt_valid : 1;
   //unsigned int pt_swap  : 1;
-  unsigned int pt_avail : 3;		/* for programmer's use		*/
+  unsigned int pt_avail : 2;		/* for programmer's use		*/
   unsigned int pt_base	: 20;		/* location of page?		*/
 } pt_t;
 
