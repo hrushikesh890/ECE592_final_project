@@ -57,6 +57,8 @@ struct procent {		/* Entry in the process table		*/
 	int16	prdesc[NDESC];	/* Device descriptors for process	*/
 	int	ptype;
 	uint32	pdbr;
+	uint32	pages_alloc;
+	uint32 pages_used;
 };
 
 /* Marker for the top of a process stack (used to help detect overflow)	*/

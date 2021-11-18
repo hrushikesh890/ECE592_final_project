@@ -14,7 +14,7 @@
 
 #define	FFS_START	((8192*4096) + (1024*4096))
 
-#define	SWP_START	(FFS_START + MAX_SWAP_SIZE*4096)
+#define	SWP_START	(FFS_START + MAX_FFS_SIZE*4096)
 
 /* Structure for a page directory entry */
 
@@ -46,7 +46,7 @@ typedef struct {
   unsigned int pt_dirty : 1;		/* page was written?		*/
   unsigned int pt_mbz	: 1;		/* must be zero			*/
   unsigned int pt_global: 1;		/* should be zero in 586	*/
-  //unsigned int pt_valid : 1;
+  unsigned int pt_valid : 1;
   //unsigned int pt_swap  : 1;
   unsigned int pt_avail : 3;		/* for programmer's use		*/
   unsigned int pt_base	: 20;		/* location of page?		*/
