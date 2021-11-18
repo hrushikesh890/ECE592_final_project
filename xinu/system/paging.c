@@ -28,7 +28,7 @@ void initialize_page_tables()
 			pt[j].pt_pres = 1;
 			pt[j].pt_write = 1;
 			pt[j].pt_acc = 0;
-			//pt[i].pt_valid = 1;
+			pt[j].pt_valid = 1;
 			pt[j].pt_base = (((i*1024 + j)*4096) >> 12);
 			if (i < 20){
 			//kprintf("pd addr %x pd_base = %x pt_addr %x pt_base %x\n", pt[j].pt_base);

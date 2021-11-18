@@ -192,3 +192,33 @@ syscall	freeffsmem(
 	restore(mask);
 	return OK;
 }
+
+void free_virtual_mem(uint32 pdbr)
+{
+	pd_t *pd = (pd_t *)(pdbr << 12);
+	int i, j;
+
+	for (i = 0; i < 1024; i++)
+	{
+		if (pd[i].pd_pres == 1)
+		{
+			pt_t *pt = (pt_t *)(pd[i].pd_base << 12);
+			for (j = 0; j < 1024; j++)
+			{
+				pt[j].pt_pres = 0;
+				
+
+				if (i > 8) // free dynamic memory
+				{
+					if (pt[j].pt_pres == 1)
+					{
+						freeffsmem((pt[j].pt_base << 12), 4096);
+					}
+				}
+				pt[j].pt_valid = 0; 
+			}
+			freeptmem((char *)&pt[0], 4096);
+		}	
+	}
+	free((char *)&pd[0], 4096);
+}

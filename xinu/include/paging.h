@@ -91,6 +91,8 @@ char *getptmem(uint32 bytes);
 
 void ptmeminit();
 
+void free_virtual_pages(uint32);
+
 syscall	freeptmem(
 	  char		*blkaddr,	/* Pointer to memory block	*/
 	  uint32	nbytes		/* Size of block in bytes	*/
