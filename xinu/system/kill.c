@@ -14,6 +14,7 @@ syscall	kill(
 	struct	procent *prptr;		/* Ptr to process's table entry	*/
 	int32	i;			/* Index into descriptors	*/
 
+	write_cr3(PT_START);
 	mask = disable();
 	if (isbadpid(pid) || (pid == NULLPROC)
 	    || ((prptr = &proctab[pid])->prstate) == PR_FREE) {
@@ -30,6 +31,11 @@ syscall	kill(
 		close(prptr->prdesc[i]);
 	}
 	freestk(prptr->prstkbase, prptr->prstklen);
+
+	if (prptr->ptype == USER)
+	{
+		free_virtual_mem(prptr->pdbr);
+	}
 
 	switch (prptr->prstate) {
 	case PR_CURR:

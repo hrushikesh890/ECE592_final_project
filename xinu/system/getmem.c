@@ -66,9 +66,9 @@ char  	*getptmem(
 
 	prev = &pdtlist;
 	curr = pdtlist.mnext;
-	kprintf("%x -> %u\n", pdtlist.mnext, curr->mlength);
+	
 	while (curr != NULL) {			/* Search free list	*/
-
+		kprintf(" %x %x %x -> %u %d\n", prev, curr, pdtlist.mnext, curr->mlength, nbytes);
 		if (curr->mlength == nbytes) {	/* Block is exact match	*/
 			prev->mnext = curr->mnext;
 			pdtlist.mlength -= nbytes;
@@ -76,11 +76,14 @@ char  	*getptmem(
 			return (char *)(curr);
 
 		} else if (curr->mlength > nbytes) { /* Split big block	*/
+			kprintf("should be here %x\n", (uint32)curr);
 			leftover = (struct memblk *)((uint32) curr +
 					nbytes);
+			kprintf("leftover = %x\n", (uint32)(leftover));
 			prev->mnext = leftover;
 			leftover->mnext = curr->mnext;
 			leftover->mlength = curr->mlength - nbytes;
+			kprintf("leftover = %x \n", (uint32)(leftover));
 			pdtlist.mlength -= nbytes;
 			restore(mask);
 			return (char *)(curr);
@@ -89,7 +92,9 @@ char  	*getptmem(
 			curr = curr->mnext;
 		}
 	}
+	kprintf("out of mem?\n");
 	restore(mask);
+	
 	return (char *)SYSERR;
 }
 

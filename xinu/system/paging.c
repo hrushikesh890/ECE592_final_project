@@ -12,26 +12,23 @@ void initialize_page_tables()
 	{
 		pd[i].pd_pres = 0;
 		pd[i].pd_write = 1;
-		//kprintf("PD[%d] = %x\n", i, &pd[i]);
 	}
-	
-	
 	
 	for (i = 0; i < npdes; i++)
 	{
 		pd[i].pd_pres = 1;
+		kprintf("i = %d\n", i);
 		pt_t *pt = (pt_t *)(getptmem(4096));
 		pd[i].pd_base = (unsigned int)((unsigned int)&pt[0] >> 12);
-		//kprintf("pd %x, pt %x %x\n", pd[i].pd_base, &pt[0], &pd[0]);
 		for (j = 0; j < 1024; j++)
 		{
 			pt[j].pt_pres = 1;
 			pt[j].pt_write = 1;
 			pt[j].pt_acc = 0;
-			//pt[i].pt_valid = 1;
+			pt[j].pt_valid = 1;
 			pt[j].pt_base = (((i*1024 + j)*4096) >> 12);
-			if (i < 20){
-			//kprintf("pd addr %x pd_base = %x pt_addr %x pt_base %x\n", pt[j].pt_base);
+			if (j > 1022){
+			kprintf("pt_addr %x pt_base %x\n", &pt[j], pt[j].pt_base);
 			}
 		}
 	}
@@ -47,7 +44,7 @@ uint32 allocate_pdpt()
 {
 	char *pd_start = (char *)(getptmem(4096));
 	int i, j;
-	int npdes = (XINU_PAGES + 1024)/1024;
+	int npdes = (XINU_PAGES)/1024;
 	pd_t *pd = (pd_t *)pd_start;
 	
 	for (i = 0; i < 1024; i++)
@@ -68,7 +65,7 @@ uint32 allocate_pdpt()
 			pt[j].pt_pres = 1;
 			pt[j].pt_write = 1;
 			pt[j].pt_acc = 0;
-			//pt[i].pt_valid = 1;
+			pt[i].pt_valid = 1;
 			pt[j].pt_base = (((i*1024 + j)*4096) >> 12);
 			if (i < 2){
 			kprintf("pt_base %x\n", pt[j].pt_base);}

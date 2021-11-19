@@ -10,11 +10,11 @@
 #define MAX_PT_SIZE     1024    /* size of space used for page tables (in frames)        */
 #define TOTAL_PAGES	58386
 
-#define PT_START	8192*4096
+#define PT_START	(8192*4096)
 
 #define	FFS_START	((8192*4096) + (1024*4096))
 
-#define	SWP_START	(FFS_START + MAX_SWAP_SIZE*4096)
+#define	SWP_START	(FFS_START + MAX_FFS_SIZE*4096)
 
 /* Structure for a page directory entry */
 
@@ -46,9 +46,9 @@ typedef struct {
   unsigned int pt_dirty : 1;		/* page was written?		*/
   unsigned int pt_mbz	: 1;		/* must be zero			*/
   unsigned int pt_global: 1;		/* should be zero in 586	*/
-  //unsigned int pt_valid : 1;
+  unsigned int pt_valid : 1;
   //unsigned int pt_swap  : 1;
-  unsigned int pt_avail : 3;		/* for programmer's use		*/
+  unsigned int pt_avail : 2;		/* for programmer's use		*/
   unsigned int pt_base	: 20;		/* location of page?		*/
 } pt_t;
 
@@ -90,6 +90,8 @@ void initialize_page_tables();
 char *getptmem(uint32 bytes);
 
 void ptmeminit();
+
+void free_virtual_pages(uint32);
 
 syscall	freeptmem(
 	  char		*blkaddr,	/* Pointer to memory block	*/
