@@ -42,6 +42,7 @@ void	resched(void)		/* Assumes interrupts are disabled	*/
 	ptnew->prstate = PR_CURR;
 	preempt = QUANTUM;		/* Reset time slice for process	*/
 	write_cr3((unsigned long)ptnew->pdbr);
+	//kprintf("Resched %d %x\n", currpid, ptnew->pdbr);
 	ctxsw(&ptold->prstkptr, &ptnew->prstkptr);
 
 	/* Old process returns here when resumed */

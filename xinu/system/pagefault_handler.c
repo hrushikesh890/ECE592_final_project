@@ -12,7 +12,7 @@ void pagefault_handler()
 
 	
 	if(pt_base[pt_index].pt_valid == 1 && pd_base[pd_index].pd_pres == 0){
-		char* mem = (char*)getffsmem(4096);
+		uint32 mem = (uint32)getffsmem(4096);
 		proctab[currpid].pages_used += 1;
 		pt_base[pt_index].pt_pres = 1;
 		pt_base[pt_index].pt_base = (mem >> 12);

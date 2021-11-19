@@ -8,6 +8,13 @@
  * xsh_ps - shell command to print the process table
  *------------------------------------------------------------------------
  */
+process do_something()
+{
+	uint32 ct = clktime;
+	kprintf("STARTING %d\n", currpid);
+	//while ((clktime - ct) < 30);
+	kprintf("STOPPING %d\n", currpid);
+}
 shellcmd xsh_ps(int nargs, char *args[])
 {
 	struct	procent	*prptr;		/* pointer to process		*/
@@ -58,5 +65,7 @@ shellcmd xsh_ps(int nargs, char *args[])
 			prptr->prprio, prptr->prparent, prptr->prstkbase,
 			prptr->prstkptr, prptr->prstklen);
 	}
+	
+	resume(vcreate(do_something, INITSTK, 1, "p1", 0));
 	return 0;
 }

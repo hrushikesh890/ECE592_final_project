@@ -13,8 +13,9 @@ syscall	kill(
 	intmask	mask;			/* Saved interrupt mask		*/
 	struct	procent *prptr;		/* Ptr to process's table entry	*/
 	int32	i;			/* Index into descriptors	*/
-
+	kprintf("KILL CALLED\n");
 	write_cr3(PT_START);
+	kprintf("gone perfect till here\n");
 	mask = disable();
 	if (isbadpid(pid) || (pid == NULLPROC)
 	    || ((prptr = &proctab[pid])->prstate) == PR_FREE) {

@@ -49,7 +49,9 @@ pid32	vcreate(
 
 	/* Initialize stack as if the process was called		*/
 	prptr->ptype = USER;
+	write_cr3((unsigned long)PT_START);
 	prptr->pdbr = allocate_pdpt();
+	write_cr3((unsigned long)proctab[currpid].pdbr);
 	
 	*saddr = STACKMAGIC;
 	savsp = (uint32)saddr;

@@ -55,9 +55,10 @@ void	nulluser()
 	/* Initialize the system */
 
 	sysinit();
-
+	kprintf("MEMINIT\n");
 	/* Output Xinu memory layout */
 	free_mem = 0;
+	kprintf("MEMINIT\n");
 	for (memptr = memlist.mnext; memptr != NULL;
 						memptr = memptr->mnext) {
 		free_mem += memptr->mlength;
@@ -188,6 +189,7 @@ static	void	sysinit()
 		prptr->prname[0] = NULLCH;
 		prptr->prstkbase = NULL;
 		prptr->prprio = 0;
+		prptr->pdbr = PT_START;
 	}
 
 	/* Initialize the Null process entry */	
@@ -214,9 +216,9 @@ static	void	sysinit()
 	ptmeminit();
 	initialize_page_tables();
 	kprintf("TYOOOOOOOOOOOOOHOOOOO 2\n");
-	char *pd_start = XINU_PAGES*4096;
+	/*char *pd_start = XINU_PAGES*4096;
 	pd_t *pd = (pd_t *)pd_start;
-	kprintf("%x - %d - %x - %x\n", pd[0], pd[0].pd_pres, read_cr3(), read_cr0());
+	kprintf("%x - %d - %x - %x %x\n", &pd[0], pd[0].pd_pres, read_cr3(), read_cr0(), &end);*/
 	enable_paging();
 	kprintf("\n\n\nDUNZO\n");
 
@@ -236,10 +238,12 @@ static	void	sysinit()
 	/* Initialize the real time clock */
 
 	clkinit();
-	
+	kprintf("here\n");
 	for (i = 0; i < NDEVS; i++) {
+		kprintf("%d %d\n",i, NDEVS);
 		init(i);
 	}
+	kprintf("here 2\n");
 	return;
 	
 }
