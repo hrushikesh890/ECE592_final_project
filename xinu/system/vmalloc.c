@@ -5,7 +5,7 @@ char* vmalloc(uint32 nbytes){
 	intmask mask;
 	pd_t* pd_base = proctab[currpid].pdbr;
 	pt_t* pt_base;
-
+	char* retVal;
 	mask = disable();
 
 	write_cr3((unsigned long)PT_START);
@@ -58,4 +58,5 @@ char* vmalloc(uint32 nbytes){
 	}
 
 	write_cr3((unsigned long) proctab[currpid].pdbr);
+	return 
 }

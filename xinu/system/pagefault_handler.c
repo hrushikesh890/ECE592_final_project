@@ -3,7 +3,7 @@ void pagefault_handler()
 {
 	pd_t* pd_base;
 	pt_t* pt_base;
-	uint32 pd_index,pt_index;
+	uint32 pd_index, pt_index;
 	uint32 vaddr = (uint32)read_cr2();
 	pd_index = (vaddr >> 22) & (0x3FF);
 	pt_index = (vaddr >> 12) & (0x3FF);
@@ -16,7 +16,7 @@ void pagefault_handler()
 		proctab[currpid].pages_used += 1;
 		pt_base[pt_index].pt_pres = 1;
 		pt_base[pt_index].pt_base = (mem >> 12);
-		write_cr3((unsigned int)(proctab[currpid].pdbr));
+		write_cr3((unsigned long)(proctab[currpid].pdbr));
 	}
 		else if(pt_base[pt_index].pt_valid == 0){
 			kprintf("P%d::SEGMENTATION FAULT\n", currpid);
