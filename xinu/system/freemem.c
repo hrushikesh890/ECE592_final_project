@@ -197,16 +197,16 @@ void free_virtual_mem(uint32 pdbr)
 {
 	pd_t *pd = (pd_t *)(pdbr);
 	int i, j;
-	kprintf("Came till here alright %x %x\n", &pd[0]);
+	//kprintf("Came till here alright %x %x\n", &pd[0]);
 	for (i = 0; i < 1024; i++)
 	{
 		if (pd[i].pd_pres == 1)
 		{
-			kprintf("Came till here alright 1\n");
+			//kprintf("Came till here alright 1\n");
 			pt_t *pt = (pt_t *)(pd[i].pd_base << 12);
 			for (j = 0; j < 1024; j++)
 			{
-				kprintf("Came till here alright 1.2\n");
+				//kprintf("Came till here alright 1.2\n");
 				pt[j].pt_pres = 0;
 				
 
@@ -219,10 +219,10 @@ void free_virtual_mem(uint32 pdbr)
 				}
 				pt[j].pt_valid = 0; 
 			}
-			kprintf("Came till here alright 2\n");
+			//kprintf("Came till here alright 2\n");
 			freeptmem((char *)&pt[0], 4096);
 		}	
 	}
-	kprintf("Came till here alright 3\n");
+	//kprintf("Came till here alright 3\n");
 	freeptmem((char *)&pd[0], 4096);
 }

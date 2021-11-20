@@ -57,7 +57,7 @@ uint32 allocate_pdpt()
 		pt_t *pt = (pt_t *)getptmem(4096);
 		pd[i].pd_pres = 1;
 		pd[i].pd_base = (unsigned int)((int)&pt[0] >> 12);
-		kprintf("pd %x, pt %x\n", pd[i].pd_base, &pt[i*1024]);
+		//kprintf("pd %x, pt %x\n", pd[i].pd_base, &pt[i*1024]);
 		for (j = 0; j < 1024; j++)
 		{
 			pt[j].pt_pres = 1;

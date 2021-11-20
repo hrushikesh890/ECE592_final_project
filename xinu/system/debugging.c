@@ -3,13 +3,18 @@
 uint32 free_ffs_pages(){
     struct memblk *curr;
     uint32 free_ffs = 0;
-    curr = &ffslist;
+    write_cr3((unsigned long) PT_START);
+    kprintf("In freeffs\n");
+    curr = ffslist.mnext;
+    kprintf("curr = %x",curr);
 
     while(curr != NULL){
         free_ffs += curr->mlength;
+        kprintf("curr length: %d\n",curr->mlength);
+        curr = curr->mnext;
     }
-
-    return free_ffs;
+    write_cr3((unsigned long) proctab[currpid].pdbr);
+    return (free_ffs/4096);
 }
 
 uint32 free_swap_pages(){
