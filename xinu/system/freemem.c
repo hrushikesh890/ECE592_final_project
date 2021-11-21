@@ -195,6 +195,7 @@ syscall	freeffsmem(
 
 void free_virtual_mem(uint32 pdbr)
 {
+	write_cr3((unsigned long)PT_START);
 	pd_t *pd = (pd_t *)(pdbr);
 	int i, j;
 	//kprintf("Came till here alright %x %x\n", &pd[0]);
@@ -207,16 +208,17 @@ void free_virtual_mem(uint32 pdbr)
 			for (j = 0; j < 1024; j++)
 			{
 				//kprintf("Came till here alright 1.2\n");
-				pt[j].pt_pres = 0;
 				
 
-				if (i > 8) // free dynamic memory
+				if (i > 7) // free dynamic memory
 				{
 					if (pt[j].pt_pres == 1)
 					{
 						freeffsmem((pt[j].pt_base << 12), 4096);
+						//kprintf("Reached after freeffs\n");
 					}
 				}
+				pt[j].pt_pres = 0;
 				pt[j].pt_valid = 0; 
 			}
 			//kprintf("Came till here alright 2\n");

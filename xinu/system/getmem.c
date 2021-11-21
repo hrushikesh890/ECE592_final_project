@@ -109,7 +109,7 @@ char  	*getffsmem(
 {
 	intmask	mask;			/* Saved interrupt mask		*/
 	struct	memblk	*prev, *curr, *leftover;
-	//write_cr3((unsigned long)PT_START);
+	write_cr3((unsigned long)PT_START);
 	mask = disable();
 	if (nbytes == 0) {
 		write_cr3((unsigned long)proctab[currpid].pdbr);
