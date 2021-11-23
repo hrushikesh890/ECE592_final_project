@@ -4,13 +4,10 @@ uint32 free_ffs_pages(){
     struct memblk *curr;
     uint32 free_ffs = 0;
     write_cr3((unsigned long) PT_START);
-    //kprintf("In freeffs\n");
     curr = ffslist.mnext;
-    //kprintf("curr = %x",curr);
 
     while(curr != NULL){
         free_ffs += curr->mlength;
-        //kprintf("curr length: %d\n",curr->mlength);
         curr = curr->mnext;
     }
     write_cr3((unsigned long) proctab[currpid].pdbr);

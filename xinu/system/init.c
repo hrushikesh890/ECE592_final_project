@@ -13,7 +13,7 @@ syscall	init(
 	intmask		mask;		/* Saved interrupt mask		*/
 	struct dentry	*devptr;	/* Entry in device switch table	*/
 	int32		retval;		/* Value to return to caller	*/
-	kprintf("here2\n");
+	
 	mask = disable();
 	if (isbaddev(descrp)) {
 		restore(mask);

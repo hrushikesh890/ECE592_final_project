@@ -16,7 +16,16 @@
 
 #define	SWP_START	(FFS_START + MAX_FFS_SIZE*4096)
 
+#define INV_TABLE_START (SWP_START + MAX_SWAP_SIZE*4096)
 /* Structure for a page directory entry */
+
+typedef struct{
+  unsigned int pt_offset : 10;
+  unsigned int pd_offset : 10;
+  unsigned int swp_addr : 20;
+  unsigned int proc_pid : 7; // only 100 processes
+  unsigned int do_not_care : 17; // free bits to round up the address size to 64 bits
+} inv_pt;
 
 typedef struct {
 

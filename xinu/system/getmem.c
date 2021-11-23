@@ -127,7 +127,7 @@ char  	*getffsmem(
 		if (curr->mlength == nbytes) {	/* Block is exact match	*/
 			prev->mnext = curr->mnext;
 			ffslist.mlength -= nbytes;
-			write_cr3((unsigned long)proctab[currpid].pdbr);
+			//write_cr3((unsigned long)proctab[currpid].pdbr);
 			restore(mask);
 			return (char *)(curr);
 
@@ -138,7 +138,7 @@ char  	*getffsmem(
 			leftover->mnext = curr->mnext;
 			leftover->mlength = curr->mlength - nbytes;
 			ffslist.mlength -= nbytes;
-			write_cr3((unsigned long)proctab[currpid].pdbr);
+			//write_cr3((unsigned long)proctab[currpid].pdbr);
 			restore(mask);
 			return (char *)(curr);
 		} else {			/* Move to next block	*/

@@ -198,33 +198,30 @@ void free_virtual_mem(uint32 pdbr)
 	write_cr3((unsigned long)PT_START);
 	pd_t *pd = (pd_t *)(pdbr);
 	int i, j;
-	//kprintf("Came till here alright %x %x\n", &pd[0]);
+
 	for (i = 0; i < 1024; i++)
 	{
 		if (pd[i].pd_pres == 1)
 		{
-			//kprintf("Came till here alright 1\n");
 			pt_t *pt = (pt_t *)(pd[i].pd_base << 12);
 			for (j = 0; j < 1024; j++)
 			{
-				//kprintf("Came till here alright 1.2\n");
-				
 
 				if (i > 7) // free dynamic memory
 				{
 					if (pt[j].pt_pres == 1)
 					{
 						freeffsmem((pt[j].pt_base << 12), 4096);
-						//kprintf("Reached after freeffs\n");
+
 					}
 				}
 				pt[j].pt_pres = 0;
 				pt[j].pt_valid = 0; 
 			}
-			//kprintf("Came till here alright 2\n");
+
 			freeptmem((char *)&pt[0], 4096);
 		}	
 	}
-	//kprintf("Came till here alright 3\n");
+
 	freeptmem((char *)&pd[0], 4096);
 }
