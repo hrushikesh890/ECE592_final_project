@@ -5,10 +5,10 @@ void set_invpt_entry(uint32 addr, pid32 pid, uint32 pd_offset, uint32 pt_offset,
 	uint32 swp_index = (addr & 0x3fff);
 	inv_pt* ipt = (inv_pt *)(INV_TABLE_START);
 
-	inv_pt[swp_index].pt_offset = pt_offset;
-	inv_pt[swp_index].pd_offset = pd_offset;
-	inv_pt[swp_index].swp_addr = swp_addr;
-	inv_pt[swp_index].proc_pid = pid;
+	ipt[swp_index].pt_offset = pt_offset;
+	ipt[swp_index].pd_offset = pd_offset;
+	ipt[swp_index].swp_addr = swp_addr;
+	ipt[swp_index].proc_pid = pid;
 }
 
 void init_inv_pt()
@@ -17,7 +17,7 @@ void init_inv_pt()
 	int i;
 	for (i = 0; i < 16*1024; i++)
 	{
-		inv_pt[i].proc_pid = 0; // setting it to zero to show that current inv pt entry is invalid
+		ipt[i].proc_pid = 0; // setting it to zero to show that current inv pt entry is invalid
 	}
 }
 
@@ -64,7 +64,7 @@ void swapping(uint32 pt_offset, uint32 pd_offset)
 			if (pt1[ipt[id].pt_offset].pt_swap == 1)
 			{
 				pt[pt_offset].pt_offset = pt1[ipt[id].pt_offset].pt_offset; // save the new pt to the ffs
-				pt1[ipt[id].pt_offset].pt_offset = inv_pt[id].swp_addr;
+				pt1[ipt[id].pt_offset].pt_offset = ipt[id].swp_addr;
 				pt[pt_offset].pt_pres = 1;
 				pt1[ipt[id].pt_offset].pt_pres = 0;
 				set_invpt_entry(pt[pt_offset].pt_base, currpid, pd_offset, pt_offset, addr);
@@ -94,7 +94,7 @@ void swapping(uint32 pt_offset, uint32 pd_offset)
 			if (pt1[ipt[id].pt_offset].pt_swap == 1)
 			{
 				pt[pt_offset].pt_offset = pt1[ipt[id].pt_offset].pt_offset; // save the new pt to the ffs
-				pt1[ipt[id].pt_offset].pt_offset = inv_pt[id].swp_addr;
+				pt1[ipt[id].pt_offset].pt_offset = ipt[id].swp_addr;
 				pt[pt_offset].pt_pres = 1;
 				pt1[ipt[id].pt_offset].pt_pres = 0;
 				set_invpt_entry(pt[pt_offset].pt_base, currpid, pd_offset, pt_offset, 0);

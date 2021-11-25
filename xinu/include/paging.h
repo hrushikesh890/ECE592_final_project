@@ -8,7 +8,7 @@
 #define MAX_FFS_SIZE    16*1024 /* size of FFS space  (in frames)                        */
 #define MAX_SWAP_SIZE   32*1024 /* size of swap space  (in frames)                       */
 #define MAX_PT_SIZE     1024    /* size of space used for page tables (in frames)        */
-#define TOTAL_PAGES	58386
+#define TOTAL_PAGES	74770
 
 #define PT_START	(8192*4096)
 
@@ -56,8 +56,8 @@ typedef struct {
   unsigned int pt_mbz	: 1;		/* must be zero			*/
   unsigned int pt_global: 1;		/* should be zero in 586	*/
   unsigned int pt_valid : 1;
-  //unsigned int pt_swap  : 1;
-  unsigned int pt_avail : 2;		/* for programmer's use		*/
+  unsigned int pt_swap  : 1;
+  unsigned int pt_avail : 1;		/* for programmer's use		*/
   unsigned int pt_base	: 20;		/* location of page?		*/
 } pt_t;
 
@@ -114,4 +114,8 @@ extern uint32 allocate_pdpt(void);
 extern void pagefault_handler_disp(void);
 
 extern interrupt pagefault_handler(void);
+
+// swapping stuff
+
+extern void set
 #endif

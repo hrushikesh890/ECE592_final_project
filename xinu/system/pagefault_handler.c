@@ -19,12 +19,18 @@ void pagefault_handler()
 
 	
 	if((pt_base[pt_index].pt_valid == 1) && (pd_base[pd_index].pd_pres == 1) && (pt_base[pt_index].pt_pres == 0)){
-
-		mem = getffsmem(4096);
-		write_cr3((unsigned long) PT_START);
-		proctab[currpid].pages_used += 1;
-		pt_base[pt_index].pt_pres = 1;
-		pt_base[pt_index].pt_base = ((uint32)mem >> 12);
+		if (free_ffs_pages() > 0)
+		{			
+			mem = getffsmem(4096);
+			write_cr3((unsigned long) PT_START);
+			proctab[currpid].pages_used += 1;
+			pt_base[pt_index].pt_pres = 1;
+			pt_base[pt_index].pt_base = ((uint32)mem >> 12);
+		}
+		else
+		{
+			swapping(pt_index, pd_index);
+		}
 		
 	}
 

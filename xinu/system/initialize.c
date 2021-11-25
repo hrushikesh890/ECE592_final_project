@@ -215,9 +215,10 @@ static	void	sysinit()
 	ptmeminit();
 
 	initialize_page_tables();
+
+	init_inv_pt();
 	
-	enable_paging();
-	
+	enable_paging();	
 
 	/* Initialize buffer pools */
 
