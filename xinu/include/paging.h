@@ -117,5 +117,4 @@ extern interrupt pagefault_handler(void);
 
 // swapping stuff
 
-extern void set
 #endif

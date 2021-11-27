@@ -207,7 +207,6 @@ void free_virtual_mem(uint32 pdbr)
 			pt_t *pt = (pt_t *)(pd[i].pd_base << 12);
 			for (j = 0; j < 1024; j++)
 			{
-
 				if (i > 7) // free dynamic memory
 				{
 					if (pt[j].pt_pres == 1)
@@ -216,11 +215,26 @@ void free_virtual_mem(uint32 pdbr)
 					}					
 				}
 				pt[j].pt_pres = 0;
-				pt[j].pt_valid = 0; 
+				pt[j].pt_valid = 0;
+				
+				// if(pt[j].pt_swap == 1){
+					
+				// }
+
+				int inv = 0;	
+				for(inv = 0;inv < 16*1024; inv++){
+					if((ipt[inv].proc_pid == currpid) && (ipt[inv].swp_addr != 0)){
+						freeswpmem(ipt[inv].swp_addr, 4096);
+						ipt[inv].proc_pid = 0;
+					}
+				}
+
 			}
 
 			freeptmem((char *)&pt[0], 4096);
-		}	
+		}
+
+			
 	}
 
 	freeptmem((char *)&pd[0], 4096);

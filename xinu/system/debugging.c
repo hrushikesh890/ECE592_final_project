@@ -17,13 +17,18 @@ uint32 free_ffs_pages(){
 uint32 free_swap_pages(){
     struct memblk *curr;
     uint32 free_swp = 0;
-    curr = &swplist;
+    write_cr3((unsigned long) PT_START);
+    curr = swplist.mnext;
 
     while(curr != NULL){
+        //kprintf("free swp:%d, mlength:%d\n",free_swp,curr->mlength);
         free_swp += curr->mlength;
+        curr = curr->mnext;
+       // kprintf("*free swp:%d, mlength:%d\n",free_swp,curr->mlength);
     }
-
-    return free_swp;
+     write_cr3((unsigned long) proctab[currpid].pdbr);
+     //kprintf("free swap = %d/4096 %d\n",free_swp, free_swp/4096);
+    return (free_swp/4096);
 }
 
     

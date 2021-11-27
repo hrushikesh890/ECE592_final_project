@@ -171,6 +171,8 @@ static	void	sysinit()
 	//PP 
 	ffsmeminit();
 
+	swpmeminit();
+
 	/* Initialize system variables */
 
 	/* Count the Null process as the first process in the system */
